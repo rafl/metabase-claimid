@@ -3,8 +3,8 @@ package Metabase::ClaimID::Web::Controller::Root;
 use 5.010;
 use Moose;
 use Try::Tiny;
-use MooseX::Types::Common::String qw(NonEmptySimpleStr);
 use MooseX::Types::Moose qw(Str);
+use MooseX::Types::Common::String qw(NonEmptySimpleStr);
 use namespace::autoclean;
 
 BEGIN { extends 'Catalyst::Controller::ActionRole' }
