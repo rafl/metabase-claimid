@@ -34,6 +34,12 @@ use Catalyst::Test 'Metabase::ClaimID::Web';
 }
 
 {
+    my $res = request(POST('/', [email => '']));
+    ok($res->is_success, 'POST without addr');
+    like($res->content, qr/<form/i, 'shows form again');
+}
+
+{
     no warnings 'redefine';
     local *Metabase::ClaimID::send_id = sub { die 42 };
     my $res = request(POST('/', [email => 'rafl@debian.org']));

@@ -17,6 +17,7 @@ requires 'JSON::Any';
 requires 'Moose' => '0.90';
 requires 'MooseX::LazyRequire';
 requires 'MooseX::Types';
+requires 'MooseX::Types::Common';
 requires 'MooseX::Types::Email';
 requires 'MooseX::Types::Path::Class';
 requires 'MooseX::Types::Structured';

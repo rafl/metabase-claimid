@@ -3,6 +3,7 @@ package Metabase::ClaimID::Web::Controller::Root;
 use 5.010;
 use Moose;
 use Try::Tiny;
+use MooseX::Types::Common::String qw(NonEmptySimpleStr);
 use MooseX::Types::Moose qw(Str);
 use namespace::autoclean;
 
@@ -24,6 +25,10 @@ sub send_id : Chained('base') PathPart('') Args(0) Does('MatchRequestMethod') Me
     my ($self, $ctx) = @_;
 
     my $email = $ctx->request->param('email');
+    unless (NonEmptySimpleStr->check($email)) {
+        $ctx->stash(template => 'index');
+        $ctx->detach;
+    }
 
     try {
         $ctx->model('ClaimID')->send_id($email);
