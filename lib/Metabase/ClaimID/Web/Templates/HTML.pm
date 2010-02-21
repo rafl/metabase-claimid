@@ -43,14 +43,18 @@ template not_found => sub {
 
 template temporary_error => sub {
     my ($self, $vars) = @_;
-    h1 { 'Temporary error while trying to send Metabase ID for ' . $vars->{address} };
-    p { 'Please try again later.' };
+    page {
+        h1 { 'Temporary error while trying to send Metabase ID for ' . $vars->{address} };
+        p { 'Please try again later.' };
+    };
 };
 
 template permanent_error => sub {
     my ($self, $vars) = @_;
-    h1 { 'Permanent error while trying to looking up Metabase ID for ' . $vars->{address} };
-    p { 'Please contact ' . $vars->{admin_contact} . ' to resolve this issue.' };
+    page {
+        h1 { 'Permanent error while trying to looking up Metabase ID for ' . $vars->{address} };
+        p { 'Please contact ' . $vars->{admin_contact} . ' to resolve this issue.' };
+    };
 };
 
 private template form => sub {
