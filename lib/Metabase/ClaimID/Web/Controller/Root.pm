@@ -33,15 +33,18 @@ sub send_id : Chained('base') PathPart('') Args(0) Does('MatchRequestMethod') Me
         $ctx->stash(address => $email);
 
         when (/^No entry for/) {
+            $ctx->response->status(404);
             $ctx->stash(template => 'not_found');
         }
         when (/^No metabase id for/) {
+            $ctx->response->status(500);
             $ctx->stash(
                 template      => 'permanent_error',
                 admin_contact => $self->admin_contact,
             );
         }
         default {
+            $ctx->response->status(500);
             $ctx->stash(template => 'temporary_error');
         }
     };
