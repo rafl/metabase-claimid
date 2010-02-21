@@ -25,6 +25,7 @@ use Catalyst::Test 'Metabase::ClaimID::Web';
     my $res = request(POST('/', [email => 'someone@nonexistanthost']));
     ok(!$res->is_success, 'POST for nonexistant entry');
     like($res->content, qr/no entry found/i, 'reports error');
+    like($res->content, qr/value="someone\@nonexistanthost"/, 'form has previous value again');
 }
 
 {

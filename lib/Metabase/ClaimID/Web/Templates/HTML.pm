@@ -1,5 +1,6 @@
 package Metabase::ClaimID::Web::Templates::HTML;
 
+use 5.010;
 use Template::Declare::Tags;
 use namespace::autoclean;
 
@@ -64,7 +65,7 @@ private template form => sub {
                 type  => 'text',
                 name  => 'email',
                 id    => 'email',
-                value => 'Your Email Address',
+                value => $vars->{address} // 'Your Email Address',
             };
         };
 
