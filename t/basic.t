@@ -30,7 +30,9 @@ throws_ok(sub {
     $claimer->resolve('existingbut@missingfile.com');
 }, qr/No metabase id for existingbut\@missingfile\.com/);
 
-$claimer->send_id('rafl@debian.org');
+lives_ok(sub {
+    $claimer->send_id('rafl@debian.org');
+}, 'sending out an id');
 
 my @sent = $transport->deliveries;
 is(scalar @sent, 1, 'one mail sent');
