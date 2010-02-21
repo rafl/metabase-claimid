@@ -6,55 +6,51 @@ use namespace::autoclean;
 use parent 'Template::Declare';
 
 BEGIN {
-    create_wrapper page => sub {
+    create_wrapper page_wrapper => sub {
         my ($inner, %params) = @_;
         html {
             head { title { 'Metabase ID Claimer' } };
-            body {
-                $inner->();
-            };
+            body { $inner->() };
         };
     };
 }
 
-template index => sub {
-    my ($self, $vars) = @_;
-    page {
-        h1 { 'Claim your Metabase ID' };
-        show('form', $vars);
+sub page ($&) {
+    my ($name, $body) = @_;
+    template $name => sub {
+        my @args = @_;
+        page_wrapper { $body->(@args) };
     };
+}
+
+page index => sub {
+    my ($self, $vars) = @_;
+    h1 { 'Claim your Metabase ID' };
+    show('form', $vars);
 };
 
-template id_sent => sub {
+page id_sent => sub {
     my ($self, $vars) = @_;
-    page {
-        h1 { 'Metabase ID sent to ' . $vars->{sent_to} };
-    };
+    h1 { 'Metabase ID sent to ' . $vars->{sent_to} };
 };
 
-template not_found => sub {
+page not_found => sub {
     my ($self, $vars) = @_;
-    page {
-        h1 { 'No entry found for ' . $vars->{address} };
-        p { 'Do you want to claim another address?' };
-        show('form', $vars);
-    };
+    h1 { 'No entry found for ' . $vars->{address} };
+    p  { 'Do you want to claim another address?' };
+    show('form', $vars);
 };
 
-template temporary_error => sub {
+page temporary_error => sub {
     my ($self, $vars) = @_;
-    page {
-        h1 { 'Temporary error while trying to send Metabase ID for ' . $vars->{address} };
-        p { 'Please try again later.' };
-    };
+    h1 { 'Temporary error while trying to send Metabase ID for ' . $vars->{address} };
+    p  { 'Please try again later.' };
 };
 
-template permanent_error => sub {
+page permanent_error => sub {
     my ($self, $vars) = @_;
-    page {
-        h1 { 'Permanent error while trying to looking up Metabase ID for ' . $vars->{address} };
-        p { 'Please contact ' . $vars->{admin_contact} . ' to resolve this issue.' };
-    };
+    h1 { 'Permanent error while trying to looking up Metabase ID for ' . $vars->{address} };
+    p  { 'Please contact ' . $vars->{admin_contact} . ' to resolve this issue.' };
 };
 
 private template form => sub {
