@@ -1,0 +1,9 @@
+{
+  "renderer" : "TT",
+  "header": [
+    { "From" : "Metabase ID Claimer <[% sender_address %]>" },
+    { "Subject" : "Metabase ID for [% address %]" },
+    { "To" : "[% address %]" }
+  ],
+  "path" : "body.tt"
+}
