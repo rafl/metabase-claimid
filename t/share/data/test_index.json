@@ -1,0 +1,4 @@
+{
+  "rafl@debian.org" : "foo.json",
+  "existingbut@missingfile.com" : "bar.json"
+}
