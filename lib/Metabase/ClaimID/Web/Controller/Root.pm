@@ -19,7 +19,10 @@ has admin_contact => (
 
 sub base : Chained('/') PathPart('') CaptureArgs(0) { }
 
-sub index : Chained('base') PathPart('') Args(0) Does('MatchRequestMethod') Method('GET') { }
+sub index : Chained('base') PathPart('') Args(0) Does('MatchRequestMethod') Method('GET') {
+    my ($self, $ctx) = @_;
+    $ctx->stash(post_uri => $ctx->uri_for_action('send_id'));
+}
 
 sub send_id : Chained('base') PathPart('') Args(0) Does('MatchRequestMethod') Method('POST') {
     my ($self, $ctx) = @_;
@@ -61,7 +64,7 @@ sub error_404 : Chained('base') PathPart('') Args {
     $ctx->response->status(404);
 }
 
-sub end : ActionClass('RenderView') {}
+sub end : ActionClass('RenderView') { }
 
 __PACKAGE__->meta->make_immutable;
 

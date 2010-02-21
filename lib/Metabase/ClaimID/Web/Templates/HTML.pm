@@ -57,7 +57,7 @@ private template form => sub {
     my ($self, $vars) = @_;
 
     form {
-        attr { action => '', method => 'post' };
+        attr { action => $vars->{post_uri}, method => 'post' };
 
         input {
             attr {
