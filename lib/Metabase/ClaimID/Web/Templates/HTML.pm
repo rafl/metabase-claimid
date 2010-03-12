@@ -27,7 +27,7 @@ sub page ($&) {
 page index => sub {
     my ($self, $vars) = @_;
     h1 { 'Claim your Metabase ID' };
-    show('form', $vars);
+    show form => $vars;
 };
 
 page id_sent => sub {
@@ -39,7 +39,7 @@ page not_found => sub {
     my ($self, $vars) = @_;
     h1 { 'No entry found for ' . $vars->{address} };
     p  { 'Do you want to claim another address?' };
-    show('form', $vars);
+    show form => $vars;
 };
 
 page temporary_error => sub {
@@ -62,17 +62,14 @@ private template form => sub {
 
         input {
             attr {
-                type  => 'text',
-                name  => 'email',
-                id    => 'email',
+                type => 'text', name => 'email', id => 'email',
                 value => $vars->{address} // 'Your Email Address',
             };
         };
 
         input {
             attr {
-                type  => 'submit',
-                name  => 'submit',
+                type => 'submit', name => 'submit',
                 value => 'Send me my Metabase ID',
             };
         };
