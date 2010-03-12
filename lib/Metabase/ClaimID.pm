@@ -4,10 +4,11 @@ use Moose;
 use JSON::Any;
 use Email::MIME::Kit;
 use MooseX::LazyRequire;
-use MooseX::Types::Moose qw(Str ClassName HashRef);
+use MooseX::Types::Moose qw(Str HashRef);
 use MooseX::Types::Structured qw(Map);
 use MooseX::Types::Email qw(EmailAddress);
 use MooseX::Types::Path::Class qw(File Dir);
+use MooseX::Types::LoadableClass qw(ClassName);
 use Path::Resolver::Resolver::FileSystem;
 use namespace::autoclean;
 
@@ -78,25 +79,16 @@ has sender_address => (
     required => 1,
 );
 
-{
-    use Moose::Util::TypeConstraints;
-
-    my $tc = subtype as ClassName;
-    coerce $tc, from Str, via { Class::MOP::load_class($_); $_ };
-
-    has _transport_class => (
-        is       => 'ro',
-        isa      => $tc,
-        coerce   => 1,
-        default  => 'Email::Sender::Transport::Sendmail',
-        init_arg => 'transport_class',
-        handles  => {
-            _create_transport => 'new',
-        },
-    );
-
-    no Moose::Util::TypeConstraints;
-}
+has _transport_class => (
+    is       => 'ro',
+    isa      => ClassName,
+    coerce   => 1,
+    default  => 'Email::Sender::Transport::Sendmail',
+    init_arg => 'transport_class',
+    handles  => {
+        _create_transport => 'new',
+    },
+);
 
 has _transport_args => (
     is       => 'ro',

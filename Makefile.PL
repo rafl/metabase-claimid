@@ -19,6 +19,7 @@ requires 'MooseX::LazyRequire';
 requires 'MooseX::Types';
 requires 'MooseX::Types::Common';
 requires 'MooseX::Types::Email';
+requires 'MooseX::Types::LoadableClass';
 requires 'MooseX::Types::Path::Class';
 requires 'MooseX::Types::Structured';
 requires 'Path::Resolver';
